@@ -4,13 +4,15 @@ const User = require('../models/user')
 
 const jwt = require('jsonwebtoken')
 
-const getTokenFrom = request => {
-  const authorization = request.get('authorization')
-  if (authorization && authorization.startsWith('Bearer ')) {
-    return authorization.replace('Bearer ', '')
+const getTokenFrom = (req) => {
+  const authorization = req.get("authorization");
+  if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
+    return authorization.substring("bearer ".length);
   }
-  return null
-}
+  return null;
+};
+
+
 
 notesRouter.get('/', async (request, response) => {
   const notes = await Note
